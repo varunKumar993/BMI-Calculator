@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useMemo, useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
+
+  const handleHeight = (e) => {
+    setHeight(e.target.value);
+  };
+  const handleWeight = (e) => {
+    setWeight(e.target.value);
+  };
+  const BMI = useMemo(() => {
+    const calculatedheight = height / 100;
+    return weight / (calculatedheight * calculatedheight).toFixed(1);
+  }, [weight, height]);
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h3>BMI CALCULATOR</h3>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div>
+        <p>Weight : {weight} kg</p>
+        <input
+          type="range"
+          min={1}
+          max={200}
+          onChange={handleWeight}
+          defaultValue={0}
+        />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div>
+        <p>Height : {height} cm</p>
+        <input
+          type="range"
+          min={1}
+          max={200}
+          onChange={handleHeight}
+          defaultValue={0}
+        />
+      </div>
+      <div>
+        <h3>BMI is : {BMI}</h3>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
